@@ -1,4 +1,4 @@
-import type { LoginResponse } from "./types.ts";
+import type { LoginResponse } from "./types";
 
 const BASE_URL = "http://localhost:3000/api";
 
