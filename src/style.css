@@ -1,0 +1,249 @@
+/* ========================
+   RESET & BASE
+======================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f4f4f5;
+  color: #18181b;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+#app {
+  width: 100%;
+  max-width: 600px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* ========================
+   LOGIN
+======================== */
+
+#login-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+#login-section h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+
+/* ========================
+   TODOS
+======================== */
+
+#todo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+}
+
+#add-form {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+#new-title {
+  flex: 1;
+}
+
+
+/* ========================
+   TODO LISTE
+======================== */
+
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.todo-item {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: opacity 0.2s;
+}
+
+.todo-item.completed {
+  opacity: 0.5;
+}
+
+.todo-item.completed .todo-title {
+  text-decoration: line-through;
+}
+
+.todo-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.loading,
+.empty,
+.error {
+  padding: 1.5rem;
+  text-align: center;
+  color: #71717a;
+  background: white;
+  border-radius: 10px;
+}
+
+li.error {
+  color: #dc2626;
+}
+
+
+/* ========================
+   PRIORITET
+======================== */
+
+.priority {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.priority--high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.priority--medium {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.priority--low {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+
+/* ========================
+   INPUTS & KNAPPER
+======================== */
+
+input, select {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s;
+  background: white;
+}
+
+input:focus, select:focus {
+  border-color: #6366f1;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+button[type="submit"],
+#logout-btn {
+  background: #6366f1;
+  color: white;
+}
+
+button[type="submit"]:hover,
+#logout-btn:hover {
+  background: #4f46e5;
+}
+
+.btn-toggle {
+  background: #e4e4e7;
+  color: #3f3f46;
+}
+
+.btn-toggle:hover {
+  background: #d4d4d8;
+}
+
+.btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-delete:hover {
+  background: #fecaca;
+}
+
+
+/* ========================
+   STATUS-MELDING
+======================== */
+
+#status-message {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+#status-message.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+#status-message.error {
+  background: #fee2e2;
+  color: #dc2626;
+}
