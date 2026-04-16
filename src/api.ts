@@ -3,6 +3,7 @@ import type { LoginResponse } from "./types";
 const BASE_URL = "http://localhost:3000/api";
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
+
   const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
     headers: {
