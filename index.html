@@ -8,8 +8,45 @@
     <link rel="stylesheet" href="src/style.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Login-seksjon -->
+      <section id="login-section">
+        <h1>Logg inn</h1>
+        <form id="login-form">
+          <input type="email" name="email" id="email" placeholder="E-post" required />
+          <input type="password" name="password" id="password" placeholder="Passord" required />
+          <button type="submit">Logg inn</button>
+        </form>
+        <p id="login-error" class="error hidden"></p>
+      </section>
+
+      <!-- Todo-seksjon -->
 
 
+      <section id="todo-section" class="hidden">
+        <div class="header">
+          <h1>Mine oppgaver</h1>
+          <button id="logout-btn">Logg ut</button>
+        </div>
+
+        <form id="add-form">
+          <input type="text" id="new-title" placeholder="Hva må gjøres?" required />
+          <select id="new-priority">
+            <option value="low">Lav prioritet</option>
+            <option value="medium" selected>Medium prioritet</option>
+            <option value="high">Høy prioritet</option>
+          </select>
+          <button type="submit">Legg til</button>
+        </form>
+
+        <p id="status-message" class="hidden"></p>
+
+        <ul id="todo-list"></ul>
+      </section>
+
+
+    </div>
+
+    <script type="module" src="src/main.ts"></script>
   </body>
 </html>
