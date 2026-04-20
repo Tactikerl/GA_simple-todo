@@ -1,4 +1,4 @@
-import type { LoginResponse } from "./types";
+import type { LoginResponse, Todo } from "./types";
 
 const BASE_URL = "http://localhost:3000/api";
 
@@ -18,4 +18,16 @@ export async function login(email: string, password: string): Promise<LoginRespo
   }
 
   return response.json();
+}
+
+/* TODOS */
+
+export async function getTodos(): Promise<Todo[]> {
+  const response = await fetch(`${BASE_URL}/todos`)
+
+  if (!response.ok) {
+    throw new Error('Kan ikke hente todos')
+  }
+
+  return response.json()
 }
