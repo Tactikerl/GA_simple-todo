@@ -1,4 +1,4 @@
-import { getTodos, login } from "./api";
+import { createTodo, deleteTodo, getTodos, login } from "./api";
 import type { Todo } from "./types";
 
 /* VARIABLER */
@@ -10,8 +10,26 @@ const loginError = document.getElementById(
 ) as HTMLParagraphElement;
 const logoutBtn = document.getElementById("logout-btn") as HTMLButtonElement;
 const todoList = document.getElementById("todo-list") as HTMLUListElement;
+const addForm = document.getElementById("add-form") as HTMLFormElement;
+const newTitleInput = document.getElementById("new-title") as HTMLInputElement;
+const newPrioritySelect = document.getElementById(
+  "new-priority",
+) as HTMLSelectElement;
+const statusMessage = document.getElementById(
+  "status-message",
+) as HTMLParagraphElement;
 
 /* HJELPEFUNKSJONER */
+
+function showStatus(message: string, isError = false): void {
+  statusMessage.textContent = message;
+  statusMessage.className = isError ? "error" : "success";
+  statusMessage.classList.remove("hidden");
+
+  setTimeout(() => {
+    statusMessage.classList.add("hidden");
+  }, 3000);
+}
 
 function showSection(section: "login" | "todos"): void {
   if (section === "login") {
@@ -30,6 +48,11 @@ function showLoading(): void {
 /* RENDER */
 
 function renderTodos(todos: Todo[]): void {
+if (todos.length === 0) {
+  todoList.innerHTML = '<li class="empty"> Ingen oppgaver enda, legg til en...</li>'
+  return
+}
+
   todoList.innerHTML = todos
     .map(
       (
@@ -48,6 +71,20 @@ function renderTodos(todos: Todo[]): void {
       </li>`,
     )
     .join("");
+
+  document.querySelectorAll(".btn-delete").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = Number((e.target as HTMLButtonElement).dataset.id);
+
+      try {
+        await deleteTodo(id);
+        showStatus("Oppgave slettet!");
+        await loadTodos();
+      } catch (error) {
+        showStatus((error as Error).message, true);
+      }
+    });
+  });
 }
 
 /* EVENTLISTENER */
@@ -73,6 +110,22 @@ loginForm.addEventListener("submit", async (e) => {
 logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("api_key");
   showSection("login");
+});
+
+addForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = newTitleInput.value.trim();
+  const priority = newPrioritySelect.value as Todo["priority"];
+
+  try {
+    await createTodo(title, priority);
+    newTitleInput.value = "";
+    showStatus("Todo lagt til!");
+    await loadTodos();
+  } catch (error) {
+    console.error(title, priority);
+  }
 });
 
 /* DATA */
