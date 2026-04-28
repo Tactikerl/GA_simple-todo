@@ -65,6 +65,32 @@ export async function createTodo(
   return response.json();
 }
 
+
+
+
+export async function toggleTodo(todo: Todo): Promise<Todo> {
+  const response = await fetch(`${BASE_URL}/todos/${todo.id}`,{
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getApiKey()}`
+    },
+    body: JSON.stringify({
+      completed: !todo.completed,
+    })
+  })
+
+  if(!response.ok) {
+    const error = await response.json()
+    throw new Error(error.message ?? "Kunne ikke oppdatere oppgave")
+  }
+
+  return response.json()
+}
+
+
+
+
 export async function deleteTodo(id: number): Promise<void> {
   const response = await fetch(`${BASE_URL}/todos/${id}`, {
     method: "DELETE",

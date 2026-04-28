@@ -1,4 +1,4 @@
-import { createTodo, deleteTodo, getTodos, login } from "./api";
+import { createTodo, deleteTodo, getTodos, login, toggleTodo } from "./api";
 import type { Todo } from "./types";
 
 /* VARIABLER */
@@ -48,10 +48,11 @@ function showLoading(): void {
 /* RENDER */
 
 function renderTodos(todos: Todo[]): void {
-if (todos.length === 0) {
-  todoList.innerHTML = '<li class="empty"> Ingen oppgaver enda, legg til en...</li>'
-  return
-}
+  if (todos.length === 0) {
+    todoList.innerHTML =
+      '<li class="empty"> Ingen oppgaver enda, legg til en...</li>';
+    return;
+  }
 
   todoList.innerHTML = todos
     .map(
@@ -72,9 +73,29 @@ if (todos.length === 0) {
     )
     .join("");
 
+  document.querySelectorAll(".btn-toggle").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = Number((e.target as HTMLButtonElement).dataset.id);
+
+      const todo = todos.find((localTodo) => localTodo.id === id);
+      if (!todo) return;
+
+      try {
+        await toggleTodo(todo);
+        await loadTodos();
+      } catch (error) {
+        showStatus((error as Error).message, true);
+      }
+    });
+  });
+
   document.querySelectorAll(".btn-delete").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const id = Number((e.target as HTMLButtonElement).dataset.id);
+
+      const confirmed = confirm("er du sikker på at du vil slette denne?");
+
+      if (!confirmed) return;
 
       try {
         await deleteTodo(id);
@@ -108,6 +129,10 @@ loginForm.addEventListener("submit", async (e) => {
 });
 
 logoutBtn.addEventListener("click", () => {
+  const confirmed = confirm("er du sikker på at du vil logge ut?");
+
+  if (!confirmed) return;
+
   localStorage.removeItem("api_key");
   showSection("login");
 });
